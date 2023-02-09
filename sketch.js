@@ -1,37 +1,60 @@
-
 var trex, trex_running, trex_collided;
-//Crie a variável 'ground', 'invisibleGround' e 'groundImage'
+var ground, invisibleGround, groundImage;
+//Crie as variáveis 'cloud','cloudsGroup','cloudImage' e 'newImage'
+var cloud, cloudsGroup, cloudImage;
+var newImage;
 
-//Adicione o código 'loadAnimation' para carrega uma animação
 function preload(){
-  trex_running = ???("trex1.png","trex3.png","trex4.png");
+  trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
+ 
+ //Utilize o código que carrega uma animação
+ trex_collided = ???("trex_collided.png");
+ //Utilize o código que carrega uma imagem
+  groundImage = ???("ground2.png");
+  
+  cloudImage = ???("cloud.png");
+ 
 }
 
 function setup() {
   createCanvas(600, 200);
+
+  trex = createSprite(50,160,20,50);
+  trex.addAnimation("running", trex_running);
+  // trex.adicionarAnimação("colidiu",trex_colidiu)
+  trex.scale = 0.5;
   
-  //Utilize o código 'createSprite' para criar o sprite do trex
-  trex = ???(50,180,20,50);
-  //Utilize o código 'addAnimation' para adicionar a animação correndo ao trex
-  trex.???("running", trex_running);
+  ground = createSprite(200,180,400,20);
+  //Utilize o código 'addImage' para adicionar uma imagem
+  ground.???("ground",groundImage);
+  ground.x = ground.width /2;
+  //Adicione uma velocidade negativa para o seu chão
+  ground.velocityX = ??;
   
-  //Utilize o código 'scale' para definir o tamanho do trex
-  trex.??? = 0.5;
-  trex.x = 50
   
-  //Utilize o código que cria um spite para você criar o ground(solo)
-  ground = ???(200,180,400,20);
- 
 }
 
 function draw() {
-  background(220);
+  background(180);
+  
+  
+  //Adicone o código 'keyDown', pois ele significa 'pressiona'
+  if(???("space") && trex.y>=100) {
+    //Adicione uma velocidade negativa para o trex
+    trex.velocityY = ???;
+  }
   
   trex.velocityY = trex.velocityY + 0.8
   
+  if (ground.x < 0){
+    ground.x = ground.width/2;
+  }
+  
+  trex.collide(invisibleGround);
+  
  
- //Para impedir que o trex caia, utilize o código 'colide'
-  trex.???(ground);
-  //Para desenhar todos os sprites na tela, utilize o código ' drawSprites();'
- 
+  
+  drawSprites();
 }
+
+
