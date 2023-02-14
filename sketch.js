@@ -42,9 +42,7 @@ function setup() {
   invisibleGround = createSprite(200,190,400,10);
   invisibleGround.visible = false;
   
-  //criar grupos de Obstaculos e Nuvens 
-//  grupoObstaculos = createGroup();
-  //grupoNuvens = createGroup();
+  
   
 
   score = 0;
@@ -119,10 +117,7 @@ function spawnObstacles(){
     obstacle.scale = ??;
     obstacle.lifetime = ??;
    
-   //adicione cada obstáculo ao grupo
- //   obstaclesGroup.add(obstacle);
- }
-}
+
 
 function spawnClouds() {
   //escreva o código aqui para gerar as nuvens
@@ -140,7 +135,6 @@ function spawnClouds() {
     cloud.depth = trex.depth;
     trex.depth = trex.depth + 1;
     
-    //adicionando nuvem ao grupo
- //  cloudsGroup.add(cloud);
+  
     }
 }
