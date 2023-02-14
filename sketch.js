@@ -1,60 +1,146 @@
+var PLAY = 1;
+var END = 0;
+var gameState = PLAY;
+
 var trex, trex_running, trex_collided;
 var ground, invisibleGround, groundImage;
-//Crie as variáveis 'cloud','cloudsGroup','cloudImage' e 'newImage'
-var cloud, cloudsGroup, cloudImage;
-var newImage;
+
+var cloudsGroup, cloudImage;
+var obstaclesGroup, obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
+
+var score;
+
 
 function preload(){
   trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
- 
- //Utilize o código que carrega uma animação
- trex_collided = ???("trex_collided.png");
- //Utilize o código que carrega uma imagem
-  groundImage = ???("ground2.png");
+  trex_collided = loadAnimation("trex_collided.png");
   
-  cloudImage = ???("cloud.png");
- 
+  groundImage = loadImage("ground2.png");
+  
+  cloudImage = loadImage("cloud.png");
+  
+//Carregue a imagem dos obstáculos 4,5 e 6
+obstacle1 = loadImage("obstacle1.png");
+obstacle2 = loadImage("obstacle2.png");
+obstacle3 = loadImage("obstacle3.png");
+???
 }
 
 function setup() {
   createCanvas(600, 200);
-
-  trex = createSprite(50,160,20,50);
+  
+  trex = createSprite(50,180,20,50);
   trex.addAnimation("running", trex_running);
-  // trex.adicionarAnimação("colidiu",trex_colidiu)
+  trex.addAnimation("collided" , trex_collided)
   trex.scale = 0.5;
   
   ground = createSprite(200,180,400,20);
-  //Utilize o código 'addImage' para adicionar uma imagem
-  ground.???("ground",groundImage);
+  ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
-  //Adicione uma velocidade negativa para o seu chão
-  ground.velocityX = ??;
   
   
+  invisibleGround = createSprite(200,190,400,10);
+  invisibleGround.visible = false;
+  
+  //criar grupos de Obstaculos e Nuvens 
+//  grupoObstaculos = createGroup();
+  //grupoNuvens = createGroup();
+  
+
+  score = 0;
 }
 
 function draw() {
   background(180);
+ 
+  text("Pontuação: "+ score, 500,50);
   
   
-  //Adicone o código 'keyDown', pois ele significa 'pressiona'
-  if(???("space") && trex.y>=100) {
-    //Adicione uma velocidade negativa para o trex
-    trex.velocityY = ???;
-  }
   
-  trex.velocityY = trex.velocityY + 0.8
+  if(gameState === PLAY){
+    //mover o solo
+    ground.velocityX = -4;
+    //pontuação
+    score = score + Math.round(frameCount/60);
+    
+    if (ground.x < 0){
+      ground.x = ground.width/2;
+    }
+    
+    //pular quando tecla espaço for pressionada
+    if(keyDown("space")&& trex.y >= 100) {
+        trex.velocityY = -13;
+    }
+    
+    //adicionar gravidade
+    trex.velocityY = trex.velocityY + 0.8
   
-  if (ground.x < 0){
-    ground.x = ground.width/2;
-  }
+    //gerar as nuvens
+    spawnClouds();
   
+    //gerar obstáculos no solo
+    spawnObstacles();
+    
+   
+ 
+  //impede o trex de cair
   trex.collide(invisibleGround);
   
- 
+  
   
   drawSprites();
+}}
+
+function spawnObstacles(){
+ if (frameCount % 60 === 0){
+   var obstacle = createSprite(400,165,10,40);
+   obstacle.velocityX = -6;
+   
+    //gerar obstáculos aleatórios
+    var rand = Math.round(random(1,6));
+    switch(rand) {
+      case 1: obstacle.addImage(obstacle1);
+              break;
+      case 2: obstacle.addImage(obstacle2);
+              break;
+      case 3: obstacle.addImage(obstacle3);
+              break;
+              //Adicione as imagens que correspodem ao caso
+      case 4: ???
+              break;
+      case 5: ???
+              break;
+      case 6: ???
+              break;
+      default: break;
+    }
+   
+    //O tamanho do obstáculo será 0.5 e o seu tempo de vida 300      
+    obstacle.scale = ??;
+    obstacle.lifetime = ??;
+   
+   //adicione cada obstáculo ao grupo
+ //   obstaclesGroup.add(obstacle);
+ }
 }
 
-
+function spawnClouds() {
+  //escreva o código aqui para gerar as nuvens
+   if (frameCount % 60 === 0) {
+     cloud = createSprite(600,100,40,10);
+    cloud.y = Math.round(random(10,60));
+    cloud.addImage(cloudImage);
+    cloud.scale = 0.5;
+    cloud.velocityX = -3;
+    
+     //atribua tempo de vida da nuvem em 134
+    cloud.lifetime = ??;
+    
+    //ajustar a profundidade
+    cloud.depth = trex.depth;
+    trex.depth = trex.depth + 1;
+    
+    //adicionando nuvem ao grupo
+ //  cloudsGroup.add(cloud);
+    }
+}
